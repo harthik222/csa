@@ -1,0 +1,21 @@
+CREATE DATABASE doctor_appointment;
+USE doctor_appointment;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    role ENUM('PATIENT','DOCTOR','ADMIN') NOT NULL
+);
+
+CREATE TABLE appointments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    appointment_date DATE NOT NULL,
+    appointment_time TIME NOT NULL,
+    status ENUM('PENDING','CONFIRMED','CANCELLED') DEFAULT 'PENDING',
+    FOREIGN KEY (patient_id) REFERENCES users(id),
+    FOREIGN KEY (doctor_id) REFERENCES users(id)
+);
